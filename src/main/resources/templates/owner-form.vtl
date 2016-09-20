@@ -1,0 +1,36 @@
+<h1>Add a potential owner</h1>
+
+<form action="/owners" method="post">
+  <div class="form-group">
+    <label for="name">Enter name:</label>
+    <input type = "text" name="name" class="form-control" required>
+  </div>
+  <div class="form-group">
+    <label for="phone">Enter phone:</label>
+    <input type = "text" name="phone" class="form-control" required>
+  </div>
+  <div class="form-group">
+    <label for="types">Choose preferred animal:</label>
+    <select name="types">
+        <option>none</option>
+      #foreach($type in $types)
+        <option>$type</option>
+      #end
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="breeds">Choose preferred breed:</label>
+    <select name="breeds">
+        <option>none</option>
+      #foreach($breed in $breeds)
+        #if($breed.length() > 0)
+          <option>$breed</option>
+        #end
+      #end
+    </select>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Add Owner</button>
+</form>
+
+<a href="/owners">Back to All Potential Owners</a>

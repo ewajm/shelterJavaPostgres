@@ -19,8 +19,10 @@ public class AnimalTest{
   @After
   public void tearDown() {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "DELETE FROM animals *;";
-      con.createQuery(sql).executeUpdate();
+      String sql_animals = "DELETE FROM animals *;";
+      String sql_owners = "DELETE FROM owners *;";
+      con.createQuery(sql_owners).executeUpdate();
+      con.createQuery(sql_animals).executeUpdate();
     }
   }
 
@@ -57,6 +59,17 @@ public class AnimalTest{
   }
 
   @Test
+  public void getOwnerId_instantiatesToNeg1_Neg1(){
+    assertEquals(-1, myAnimal.getOwnerId());
+  }
+
+  @Test
+  public void getOwnerId_changesWhenSet_1(){
+    myAnimal.setOwnerId(1);
+    assertEquals(1, myAnimal.getOwnerId());
+  }
+
+  @Test
   public void equals_returnsTrueIfFieldsAreTheSame(){
     Animal myOtherAnimal = new Animal("Steve", "2016-06-10", "M", "cat", "asshole");
     assertTrue(myAnimal.equals(myOtherAnimal));
@@ -80,5 +93,62 @@ public class AnimalTest{
     myOtherAnimal.save();
     assertTrue(Animal.all().contains(myAnimal));
     assertTrue(Animal.all().contains(myOtherAnimal));
+  }
+
+  @Test
+  public void sort_sortsByGivenColumns_true(){
+    myAnimal.save();
+    Animal myOtherAnimal = new Animal("Bobette", "2016-06-10", "F", "dog", "poodle");
+    myOtherAnimal.save();
+    assertEquals(myAnimal, Animal.all().get(0));
+    assertEquals(myOtherAnimal, Animal.sort("name").get(0));
+  }
+
+  @Test
+  public void getId_animalsInstantiateWithAnID(){
+    myAnimal.save();
+    assertTrue(myAnimal.getId() > 0);
+  }
+
+  @Test
+  public void find_returnsAnimalWithSameId_otherAnimal(){
+    myAnimal.save();
+    Animal myOtherAnimal = new Animal("Bobette", "2016-06-10", "F", "dog", "poodle");
+    myOtherAnimal.save();
+    assertEquals(Animal.find(myOtherAnimal.getId()), myOtherAnimal);
+  }
+
+  @Test
+  public void getTypes_returnsAnimalTypes_True(){
+    myAnimal.save();
+    Animal myOtherAnimal = new Animal("Bobette", "2016-06-10", "F", "dog", "poodle");
+    myOtherAnimal.save();
+    assertTrue(Animal.getTypes().contains("cat"));
+    assertTrue(Animal.getTypes().contains("dog"));
+  }
+
+  @Test
+  public void getTypes_doesNotSaveDuplicates_True(){
+    myAnimal.save();
+    Animal myOtherAnimal = new Animal("Bobette", "2016-06-10", "F", "cat", "poodle");
+    myOtherAnimal.save();
+    assertEquals(1, Animal.getTypes().size());
+  }
+
+  @Test
+  public void getBreeds_returnsAnimalBreeds_True(){
+    myAnimal.save();
+    Animal myOtherAnimal = new Animal("Bobette", "2016-06-10", "F", "dog", "poodle");
+    myOtherAnimal.save();
+    assertTrue(Animal.getBreeds().contains("asshole"));
+    assertTrue(Animal.getBreeds().contains("poodle"));
+  }
+
+  @Test
+  public void getBreeds_doesNotSaveDuplicates_True(){
+    myAnimal.save();
+    Animal myOtherAnimal = new Animal("Bobette", "2016-06-10", "F", "cat", "asshole");
+    myOtherAnimal.save();
+    assertEquals(1, Animal.getBreeds().size());
   }
 }

@@ -1,0 +1,27 @@
+<h1>List of Potential Owners</h1>
+
+#if($success)
+  <h4>$success.getName() successfully added!</h4>
+#end
+#if($owners.size() > 0)
+  <ul>
+    #foreach($owner in $owners)
+    <li>$owner.getName()
+      <ul>
+        <li>Phone: $owner.getPhone()</li>
+        <li>Preferred animal: $owner.getTypePref()</li>
+        <li>Preferred Breed: $owner.getBreed()</li>
+        #if($owner.getPets().size() > 0)
+          #foreach($pet in $owner.getPets())
+            <li>Pet: $pet.getName() the $pet.getType()</li>
+          #end
+        #end
+      </ul>
+    </li>
+    #end
+  </ul>
+#else
+<h2>No owners yet</h2>
+#end
+<a href="/owners/new">New Customer</a><br>
+<a href="/">Back to Front Page</a>

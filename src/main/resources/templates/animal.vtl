@@ -1,0 +1,25 @@
+<h1>$animal.getName() the $animal.getType()</h1>
+#if($success)
+ <h2>Congratulations! $animal.getName() has been adopted!</h2>
+#end
+<p>Gender: $animal.getGender()</p>
+#if($animal.getBreed().length() > 0)
+<p>Breed: $animal.getBreed()</p>
+#end
+<p>Date Arrived at shelter: $animal.getAdmittance()</p>
+<p>Adoption status: #if($animal.getOwnerId() > 0) adopted! <p>#else not adopted :(  <p>
+
+<h3>Adoption Form</h3>
+<form action="/animals/$animal.getId()" method="post">
+  <label for="owner">Who will be adopting?</label>
+  <select name="owner_id">
+    #foreach($owner in $owners)
+      <option value="$owner.getId()">$owner.getName()</option>
+    #end
+  </select>
+  <button type = "submit" class="btn btn-success">Adopt $animal.getName()!</button>
+<form>
+#end
+<hr>
+
+<a href="/">Back to All Animals</a>

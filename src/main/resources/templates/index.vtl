@@ -1,0 +1,40 @@
+<h1>Varchar Animal Shelter</h1>
+#if($success)
+  <h4>$success.getName() successfully added!</h4>
+#end
+#if($animals.size() > 0)
+  #if($sortby)
+    #foreach($sort in $sortby)
+    <h3>$sort</h3>
+    <ul>
+      #foreach($animal in $animals)
+        #if($animal.getType().equals($sort) || $animal.getBreed().equals($sort))
+          <li><a href="animals/$animal.getId()">$animal.getName()</a></li>
+        #end
+      #end
+    </ul>
+    #end
+  #else
+  <ul>
+    #foreach($animal in $animals)
+    <li><a href="animals/$animal.getId()">$animal.getName()</a></li>
+    #end
+  </ul>
+  #end
+<form action="/" method="post">
+  <label for="sortby">Sort by</label>
+  <select name="sortby">
+    <option>Name</option>
+    <option>Type</option>
+    <option>Breed</option>
+    <option value="admittance">Arrival</option>
+  </select>
+  <button type="submit" class="btn btn-default">Sort!</button>
+</form>
+#else
+<h2>No animals yet</h2>
+#end
+<hr>
+<a href="/animals/new">New Animal</a><br>
+<a href="/owners">See Potential Customers</a><br>
+<a href="/owners/new">New Customer</a>
