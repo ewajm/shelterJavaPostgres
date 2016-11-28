@@ -1,10 +1,10 @@
-# _Template_
+# Java Animal Shelter
 
-#### By _Ewa Manek_
+#### By _Ewa Manek and Vanessa Palacios Sharma_
 
 ## Description
 
-_A template java app with support for gradle, spark and junit testing_
+_An animal shelter app where users can add or adopt animals - Java and Postgres practice using Spark_
 
 ## Setup/Installation Requirements
 
@@ -16,10 +16,10 @@ _A template java app with support for gradle, spark and junit testing_
 
 ## GitHub link
 
-https://github.com/ewajm/javaSparkTemplate
+https://github.com/ewajm/shelterJavaPostgres
 
 ## Licensing
 
 * MIT
 
-Copyright (c) 2016 **_Ewa Manek_**
+Copyright (c) 2016 **_Ewa Manek and Vanessa Palacios Sharma_**
